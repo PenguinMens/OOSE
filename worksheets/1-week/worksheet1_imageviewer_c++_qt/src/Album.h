@@ -10,13 +10,23 @@
 
 class Album 
 {
-    public:
-        Album();
-        ~Album();
-        // *** Insert your declarations here. ***
-        
     private:
-        // *** Insert your declarations here. ***
+        std::vector<Image> images;
+
+    public:
+        Album() {
+        // *** Insert initialisation code here (if needed) ***
+        }
+           
+        ~Album();
+
+        void addImage(const Image& image);
+        void removeImage(const std::string& imagePath);
+        size_t getImageCount() const;
+        Image getImageAtIndex(size_t index) const; // Note: Returning by value or reference depends on your use case
+        Image getImageByPath(std::string path) const;
+        int getIndexByPath(std::string path) const;
+
 };
 
 #endif

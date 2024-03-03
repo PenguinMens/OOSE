@@ -13,16 +13,16 @@ MainWindow::MainWindow(Album* newAlbum) :
     // Set the window title (using a superclass method).
     setWindowTitle("Qt Image Viewer");
     
-    setBaseSize(400, 400);
+    setBaseSize(1920, 1080);
     
     imageWidget = new QLabel();
-    // *** Fix this code so that it loads the initial (first) image. ***
-    imageWidget->setPixmap(QPixmap("[Initial image filename]"));
+    
+    imageWidget->setPixmap(QPixmap(album->getImageAtIndex(0).getFilename().c_str()));
 
     QScrollArea* scroller = new QScrollArea();
     scroller->setWidget(imageWidget);
     setCentralWidget(scroller);
-    
+    scroller->setWidgetResizable(true);
     toolbar = new QToolBar();
     toolbar->addAction("Previous", this, SLOT(prevBtnHandler()));
     toolbar->addAction("Next", this, SLOT(nextBtnHandler()));    
@@ -30,8 +30,9 @@ MainWindow::MainWindow(Album* newAlbum) :
     
     captionWidget = new QStatusBar();
     setStatusBar(captionWidget);
-    // *** Fix this code so that it displays the caption for the first image. ***
-    captionWidget->showMessage("[Initial image caption]");
+
+    captionWidget->showMessage(album->getImageAtIndex(0).getCaption().c_str());
+    index = 0;
 }
 
 /**
@@ -61,8 +62,9 @@ Album* MainWindow::getAlbum() const
 void MainWindow::prevBtnHandler()
 {
     // *** Fix this code so that it actually displays the previous image & caption. ***
-    imageWidget->setPixmap(QPixmap("[Previous image filename]"));
-    captionWidget->showMessage("[Previous image caption]");
+    index = (index - 1) % album->getImageCount();
+    imageWidget->setPixmap(QPixmap(album->getImageAtIndex(index).getFilename().c_str()));
+    captionWidget->showMessage(album->getImageAtIndex(index).getCaption().c_str());
 }
 
 /**
@@ -70,8 +72,12 @@ void MainWindow::prevBtnHandler()
  */
 void MainWindow::nextBtnHandler()
 {
-    // *** Fix this code so that it actually displays the next image & caption. ***
-    imageWidget->setPixmap(QPixmap("[Next image filename]"));
-    captionWidget->showMessage("[Next image caption]");
+    // *** Fix thiis code so that t actually displays the next image & caption. ***
+    index = index+1;
+    if (index >= album->getImageCount())    index = album->getImageCount()-1;
+    
+    
+    imageWidget->setPixmap(QPixmap(QPixmap(album->getImageAtIndex(index).getFilename().c_str())));
+    captionWidget->showMessage(album->getImageAtIndex(index).getCaption().c_str());
 }
 

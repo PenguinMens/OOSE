@@ -25,7 +25,7 @@ class MainWindow : public QMainWindow
         Album* getAlbum() const;
         
     private:
-        
+        void setImage();  // Helper method to set the image and caption.
         // Album field, containing image information.
         Album* album;
         
@@ -37,6 +37,7 @@ class MainWindow : public QMainWindow
         QToolBar* toolbar;         // For showing the "previous" and "next" buttons
         QLabel* imageWidget;       // For showing the image
         QStatusBar* captionWidget; // For showing the caption
+
         
     private slots:  /* Note: QT extends C++ slightly here. "Slots" (QT only) are methods that are 
                        called when certain "signals" occur. This is a kind of event-driven 
