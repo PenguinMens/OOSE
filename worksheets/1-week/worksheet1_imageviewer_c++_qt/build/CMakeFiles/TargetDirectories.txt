@@ -1,0 +1,4 @@
+/home/penguinmen/OOSE/worksheets/1-week/worksheet1_imageviewer_c++_qt/build/CMakeFiles/rebuild_cache.dir
+/home/penguinmen/OOSE/worksheets/1-week/worksheet1_imageviewer_c++_qt/build/CMakeFiles/edit_cache.dir
+/home/penguinmen/OOSE/worksheets/1-week/worksheet1_imageviewer_c++_qt/build/CMakeFiles/imageviewer.dir
+/home/penguinmen/OOSE/worksheets/1-week/worksheet1_imageviewer_c++_qt/build/CMakeFiles/imageviewer_autogen.dir
