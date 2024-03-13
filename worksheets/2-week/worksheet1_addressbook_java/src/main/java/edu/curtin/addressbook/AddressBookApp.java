@@ -12,23 +12,38 @@ public class AddressBookApp
     /** Used to obtain user input. */
     private static Scanner input = new Scanner(System.in);
     
+    // *^* MAKES A MAP OF OPTIONS
+    private static Map<Integer, Option> options = new HashMap<Integer, Option>();
+    private static SearchByEmail searchByEmail;
+    private static SearchByName searchByName;
     public static void main(String[] args)
     {
         String fileName;
         // String entryName;
+   
         
-        System.out.print("Enter address book filename: ");
-        fileName = input.nextLine();
-        
+
+
+        // TODO System.out.print("Enter address book filename :): ");
+        //fileName = input.nextLine();
+        fileName  = "addressbook.txt";
         try
         {
             AddressBook addressBook = readAddressBook(fileName);
-            showMenu(addressBook);
+            // *^* CREATE OPTIONS
+            searchByName = new SearchByName(addressBook);
+            searchByEmail = new SearchByEmail(addressBook);
+            // *^* INITIALISE OPTIONS
+            options.put(1, searchByName);
+            options.put(2, searchByEmail);
+
+            showMenu();
         }
         catch(IOException e)
         {
             System.out.println("Could not read from " + fileName + ": " + e.getMessage());
         }
+
     }
     
     /**
@@ -45,6 +60,7 @@ public class AddressBookApp
         try(BufferedReader reader = new BufferedReader(new FileReader(fileName)))
         {
             String line = reader.readLine();
+            
             while(line != null)
             {
                 String[] parts = line.split(":");
@@ -68,58 +84,44 @@ public class AddressBookApp
     }
     
     /**
-     * Show the main menu, offering the user options to (1) search entries by 
+     * Show the main menu, offering the user options to (1)  search entries by 
      * name, (2) search entries by email, or (3) quit.
      *
      * @param addressBook The AddressBook object to search.
      */
-    private static void showMenu(AddressBook addressBook)
+    private static void showMenu()
     {
         boolean done = false;
         while(!done)
         {
-       
-            System.out.println("(1) Search by name, (2) Search by email, (3) Quit");
+            System.out.println("Choose an option:");
+            for(Map.Entry<Integer, Option> entry : options.entrySet())
+            {
+                System.out.print("(" + entry.getKey() + ") " + entry.getValue().toString() + " ");
+            }
+            System.out.println(" (3) Quit");
+            // System.out.println("(1) Search by name, (2) Search by email, (3) Quit");
             
             try
             {
-                switch(Integer.parseInt(input.nextLine()))
+
+                Integer key = Integer.parseInt(AddressBookApp.input.nextLine());
+                if(options.get(key) != null && key != 3)
                 {
-                    case 1:
-                        System.out.print("Enter name: ");
-                        String name = input.nextLine();
-                        
-                        for(Entry entry :addressBook.getEntries())
-                        {
-                            if(entry.name.equals(name))
-                            {
-                                System.out.println(entry.toString());
-                            }
-                        }
-                        break;
-                        
-                    case 2:
-                        System.out.print("Enter email address: ");
-                        String email = input.nextLine();
-                        
-                        
-                        for(Entry entry :addressBook.getEntries())
-                        {
-                            if(entry.getEmails().contains(email))
-                            {
-                                System.out.println(entry.toString());
-                            }
-                        }
-                        break;
-                        
-                    case 3:
-                        done = true;
-                        break;
-                        
-                    default:
-                        System.out.println("Enter a valid number");
-                        break;
+                    System.out.println("Enter the search value:");
+                    String value = input.nextLine();
+                    System.out.println(options.get(key).doOption(value));
                 }
+                else if(key == 3)
+                {
+                    done = true;
+                }
+                else
+                {
+                    System.out.println("Invalid option");
+                }
+
+
             }
             catch(NumberFormatException e)
             {
