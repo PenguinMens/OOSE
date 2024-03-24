@@ -5,15 +5,15 @@
 #include <filesystem>
 #include "MainWindow.h"
 #include "Album.h"
-
+#include "ImageOperation.h"
 bool readAlbumFile(std::string albumFilename, Album* album);
-
+void print2DArray(ImageData* imageData);
 int main(int argc, char** argv) 
 {
     std::string albumFilename("../album/album.txt");
     
     // Input the album filename.
-    std::cout << "Enter album filename: ";
+    std::cout << "Enter album filename: \n";
     //std::getline(std::cin, albumFilename);
 
     // Initialise QT.
@@ -25,20 +25,28 @@ int main(int argc, char** argv)
     int exitCode = 1;
     
     // Read an album file.
-    if(readAlbumFile(albumFilename, album))
-    {
-        // Construct a window object on the stack.
-        MainWindow window(album);
+    ImageData* imageData = new ImageData(10,10);
+    imageData->setPixel(0, 0, 1);
+    ImageOperation* imageOperation = new ImageOperation();
+    print2DArray(imageData);
+    std::cout << "\n\n";
+    ImageData* newImageData = imageOperation->doOperation(imageData);
+    print2DArray(newImageData);
+    // if(readAlbumFile(albumFilename, album))
+    // {
+    //     // Construct a window object on the stack.
+        
+    //     //MainWindow window(album);
 
-        // Run the GUI.
-        window.show();
-        exitCode = app.exec();
-    }
-    else
-    {
-        std::cerr << "Error while reading " << albumFilename << std::endl;
-        exitCode = 1;
-    }
+    //     // Run the GUI.
+    //     //window.show();
+    //     //exitCode = app.exec();
+    // }
+    // else
+    // {
+    //     std::cerr << "Error while reading " << albumFilename << std::endl;
+    //     exitCode = 1;
+    // }
     return exitCode;
 }
 
@@ -72,4 +80,16 @@ bool readAlbumFile(std::string albumFilename, Album* album)
     
     // Return "true" if we reached the end-of-file, meaning success. "false" implies an error.
     return file.eof(); 
+}
+
+void print2DArray(ImageData* imageData)
+{
+    for(int x = 0; x < imageData->getWidth(); x++)
+    {
+        for(int y = 0; y < imageData->getHeight(); y++)
+        {
+            std::cout << imageData->getPixel(x, y) << " ";
+        }
+        std::cout << std::endl;
+    }
 }

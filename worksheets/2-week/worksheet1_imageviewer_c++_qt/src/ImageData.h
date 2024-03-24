@@ -7,17 +7,16 @@ class ImageData
 {
     private:
         int** image;
+        int width;
+        int height;
 
     public:
-        ImageData(int width, int height){
-            image = new int*[width];
-            for(int i = 0; i < width; i++){
-                image[i] = new int[height];
-            }
-        }
+        ImageData(int width, int height);
         ~ImageData();
         void setPixel(int x, int y, int value);
         int getPixel(int x, int y);
+        int getWidth();
+        int getHeight();
 };
 
 #endif	/* IMAGEDATA_H */

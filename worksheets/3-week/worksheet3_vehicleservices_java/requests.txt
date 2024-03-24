@@ -1,0 +1,5 @@
+taxi,CBD,Airport,2024-06-24T10:00:00 ; nseats,10 ; entertainment
+taxi,Riverside,Shops,2024-09-02T15:30:00 ; wheelchair ; storage_kg,50
+tour,Hotel Central,2026-12-01T08:00:00,Hilltop+Islands+Lunch+Crystal Cave+Riverside; nseats,25 ; storage_kg,500
+rent,2025-01-05T09:00:00,2025-01-08T16:00:00 ; storage_dim,3,3,2 ; storage_kg,1500
+rent,2025-04-01T12:00:00,2025-04-20T12:00:00 ; entertainment ; storage_kg,80 ; nseats,4
