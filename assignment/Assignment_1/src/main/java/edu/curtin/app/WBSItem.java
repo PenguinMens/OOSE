@@ -5,6 +5,7 @@ import java.util.List;
 public interface WBSItem {
     WBSItem find(String id);
     void display(String indent);
+    String saveWBS(List<String> tasks,String saveString, String parent);
     void setEffort(String id,int effort);
     String getName();
     void calcEffort(WBSInfo info);
@@ -27,4 +28,5 @@ public interface WBSItem {
     {
         display("");
     }
+
 }

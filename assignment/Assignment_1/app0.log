@@ -1,0 +1,36 @@
+Apr 14, 2024 12:47:32 PM edu.curtin.app.Menu runMenu
+INFO: Reading user input for menu option
+Apr 14, 2024 12:47:33 PM edu.curtin.app.Menu runMenu
+INFO: User selected option 
+Apr 14, 2024 12:47:33 PM edu.curtin.app.Menu runMenu
+WARNING: Unknown option 
+Apr 14, 2024 12:47:33 PM edu.curtin.app.Menu runMenu
+INFO: Reading user input for menu option
+Apr 14, 2024 12:47:39 PM edu.curtin.app.Menu runMenu
+INFO: User selected option e
+Apr 14, 2024 12:47:42 PM edu.curtin.app.Menu runMenu
+WARNING: Item not found
+Apr 14, 2024 12:47:42 PM edu.curtin.app.Menu runMenu
+INFO: Reading user input for menu option
+Apr 14, 2024 12:47:45 PM edu.curtin.app.Menu runMenu
+INFO: User selected option e
+Apr 14, 2024 12:47:46 PM edu.curtin.app.Menu readIntLoop
+INFO: Reading integer value
+Apr 14, 2024 12:47:58 PM edu.curtin.app.Menu readIntLoop
+INFO: Reading integer value
+Apr 14, 2024 12:47:59 PM edu.curtin.app.Menu readIntLoop
+INFO: Reading integer value
+Apr 14, 2024 12:48:00 PM edu.curtin.app.Menu readIntLoop
+INFO: Reading integer value
+Apr 14, 2024 12:48:01 PM edu.curtin.app.Menu runMenu
+INFO: Reading user input for menu option
+Apr 14, 2024 12:48:03 PM edu.curtin.app.Menu runMenu
+INFO: User selected option d
+Apr 14, 2024 12:48:03 PM edu.curtin.app.Menu runMenu
+INFO: Reading user input for menu option
+Apr 14, 2024 12:48:05 PM edu.curtin.app.Menu runMenu
+INFO: User selected option x
+Apr 14, 2024 12:48:05 PM edu.curtin.app.Menu runMenu
+INFO: Saving to file default.txt
+Apr 14, 2024 12:48:05 PM edu.curtin.app.Menu runMenu
+INFO: Saved to file

@@ -10,7 +10,7 @@ public class Task implements WBSItem{
     public Task(String id, String description){
         this.id = id;
         this.description = description;
-        
+        effort = -1;
     }
 
 
@@ -21,6 +21,7 @@ public class Task implements WBSItem{
     @Override
     public void setEffort (String id, int effort){
         if(this.id.equals(id)){
+            
             this.effort = effort;
         }
     }
@@ -42,7 +43,15 @@ public class Task implements WBSItem{
 
     @Override
     public void display(String indent) {
-        System.out.println(indent + id + ": " + description + ", effort = " + effort);
+        String s;
+        if(effort == -1){
+            s = indent + id + ": " + description + ", effort = ";
+        }
+        else
+        {
+            s = indent + id + ": " + description + ", effort = " + effort;
+        }   
+        System.out.println(s);
     }   
 
     @Override
@@ -56,9 +65,31 @@ public class Task implements WBSItem{
 
     @Override
     public void calcEffort(WBSInfo info) {
-        // TODO Auto-generated method stub  
-        info.addEffort(this.effort);
+        if(effort == -1)
+        {
+            
+            info.addUnknown(1);
+        }
+        else
+        {
+            info.addEffort(this.effort);
+        }
+        
+    }
 
+
+    @Override
+    public String saveWBS(List<String> tasks, String saveString, String parent) {
+        String temp;
+        if(effort == -1){
+            temp = parent + ";" + id + ";" + description + ";\n";
+        }
+        else{
+            temp = parent + ";" + id + ";" + description + ";" + effort + "\n";
+        }
+        saveString  += temp;
+      
+        return saveString;
     }
 
   

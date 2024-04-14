@@ -11,7 +11,7 @@ public class WorkItem implements WBSItem {
     public WorkItem(String id, String description){
         this.id = id;
         this.description = description;
-        this.items = new ArrayList<WBSItem>();
+        this.items = new ArrayList<>();
     }
 
     @Override
@@ -39,11 +39,21 @@ public class WorkItem implements WBSItem {
 
     @Override
     public void display(String indent) {
-        
-        System.out.println(indent + this.id+": " + this.description);   
+        String indexString =  indent + "  ";
+        String displayMString = indent + this.id+": " + this.description + "\n";
+        if(this.id.equals(""))
+        {
+            
+            indexString =  "";
+            displayMString = "";
+        }   
+        System.out.print( displayMString);   
         for (WBSItem item : items) {
-            item.display(indent + "  ");
+            item.display(indexString);
         }
+        
+        
+
     }
 
     @Override
@@ -58,8 +68,8 @@ public class WorkItem implements WBSItem {
         return this.id;
     }
     
+    @Override
     public void calcEffort(WBSInfo info){
-        info.addUnknown(1);
         for (WBSItem item : items) {
             item.calcEffort(info);
         }
@@ -71,6 +81,20 @@ public class WorkItem implements WBSItem {
 
     public void removeItem(WBSItem item){
         items.remove(item);
+    }
+
+    @Override
+    public String saveWBS(List<String> tasks , String saveString, String parent) {
+
+        if(!this.id.equals("")){
+            // edge case when node is the root
+            saveString +=   parent + ";"+ this.id + ";"+ this.description + "\n";;
+        }
+
+        for (WBSItem item : items) {
+            saveString = item.saveWBS(tasks, saveString,this.id);
+        }
+        return saveString;
     }
 
     
