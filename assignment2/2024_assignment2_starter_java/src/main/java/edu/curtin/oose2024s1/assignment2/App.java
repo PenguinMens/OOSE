@@ -1,5 +1,6 @@
 package edu.curtin.oose2024s1.assignment2;
 
+
 import java.io.*;
 
 /**
@@ -11,8 +12,7 @@ public class App
     public static void main(String[] args)
     {
         BikeShopInput inp = new BikeShopInput();
-        // BikeShopInput inp = new BikeShopInput(123);  // Seed for the random number generator
-
+        BikeShop shop = new BikeShop();
         try
         {
             System.out.println();
@@ -26,7 +26,10 @@ public class App
                 while(msg != null)
                 {
                     System.out.println(msg);
+                    
+                    shop.newMessage(msg);
                     msg = inp.nextMessage();
+                    
                 }
 
                 // Wait 1 second

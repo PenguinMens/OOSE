@@ -17,5 +17,11 @@ public class ServiceState implements BikeState{
     public void drop_off(String email) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'drop_off'");
+    }
+
+    @Override
+    public void run() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'run'");
     }    
 }
