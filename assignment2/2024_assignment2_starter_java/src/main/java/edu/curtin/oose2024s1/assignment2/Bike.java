@@ -46,6 +46,16 @@ public class Bike {
 
     public void pick_up(String email)
     {
- 
+        bikeState.pick_up(this, email);
+    }
+
+    public void run()
+    {
+        bikeState.run(this);
+    }
+
+    public void delivery()
+    {
+        bikeState.delivery(this);
     }
 }

@@ -1,0 +1,80 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+interface BikeState {
+    +purchased_online(Bike, String)
+    +purchased_in_store(Bike)
+    +drop_off(Bike, String)
+    +run(Bike)
+    +pick_up(Bike, String)
+    +delivery(Bike)
+    +setStateTransitionCallback(StateTransitionCallback)
+}
+
+interface StateTransitionCallback {
+    +onStateTransition(Bike, BikeState, BikeState)
+}
+
+class Bike {
+    -bikeState: BikeState
+    -email: String
+    -stateTransitionCallback: StateTransitionCallback
+    +setState(BikeState)
+    +setEmail(String)
+    +getEmail(): String
+    +setStateTransitionCallback(StateTransitionCallback)
+    +purchased_online(String)
+    +purchased_in_store()
+    +drop_off(String)
+    +pick_up(String)
+    +run()
+    +delivery()
+}
+
+class BikeInventory {
+    -MAX_BIKES: int
+    -currentBikes: int
+    -bikes: List<Bike>
+    +BikeInventory()
+    +onStateTransition(Bike, BikeState, BikeState)
+    +newBike()
+    +sellBike()
+    +dropOffBike(String)
+    +iterateService(String)
+    +print_stats()
+}
+
+Bike *-- BikeState
+Bike o-- StateTransitionCallback
+BikeInventory ..> StateTransitionCallback
+
+class ServiceState {
+    -days: int
+    -stateTransitionCallback: StateTransitionCallback
+    +run(Bike)
+    +setStateTransitionCallback(StateTransitionCallback)
+}
+
+class CanBeSoldState {
+    -stateTransitionCallback: StateTransitionCallback
+    +purchased_online(Bike, String)
+    +purchased_in_store(Bike)
+    +setStateTransitionCallback(StateTransitionCallback)
+}
+
+class PickUpState {
+    -stateTransitionCallback: StateTransitionCallback
+    +setStateTransitionCallback(StateTransitionCallback)
+}
+
+class EmptyState {
+    -stateTransitionCallback: StateTransitionCallback
+    +setStateTransitionCallback(StateTransitionCallback)
+}
+
+BikeState <|.. ServiceState
+BikeState <|.. CanBeSoldState
+BikeState <|.. PickUpState
+BikeState <|.. EmptyState
+
+@enduml

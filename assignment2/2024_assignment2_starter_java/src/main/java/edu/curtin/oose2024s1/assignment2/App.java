@@ -12,9 +12,12 @@ public class App
     public static void main(String[] args)
     {
         BikeShopInput inp = new BikeShopInput();
-        BikeShop shop = new BikeShop();
+        BikeInventory bikeInventory = new BikeInventory();
+        BikeShop shop = new BikeShop(bikeInventory);
+        
         try
         {
+            int days = 0;
             System.out.println();
             while(System.in.available() == 0)
             {
@@ -23,15 +26,18 @@ public class App
                 // For illustration purposes -- this just prints out the messages as they come in.
                 System.out.println("---");
                 String msg = inp.nextMessage();
+                bikeInventory.bikeIteratre();
                 while(msg != null)
                 {
-                    System.out.println(msg);
+                    // System.out.println(msg);
                     
                     shop.newMessage(msg);
                     msg = inp.nextMessage();
                     
                 }
-
+                
+                System.out.println("END OF DAY: " + days);
+                bikeInventory.print_stats();
                 // Wait 1 second
                 try
                 {
@@ -41,6 +47,7 @@ public class App
                 {
                     throw new AssertionError(e);
                 }
+                days++;
             }
         }
         catch(IOException e)
