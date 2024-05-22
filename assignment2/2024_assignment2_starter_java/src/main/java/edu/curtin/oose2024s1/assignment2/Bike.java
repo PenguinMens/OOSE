@@ -1,49 +1,51 @@
 package edu.curtin.oose2024s1.assignment2;
+import edu.curtin.oose2024s1.assignment2.states.*;
+
 
 public class Bike {
-    public enum BikeState{
-        AVAILABLE,
-        SERVICE,
-        PICKUP
-    }
+ 
 
-    private BikeState state = BikeState.AVAILABLE;
+    private BikeState bikeState;
     private String email;
 
-    public void purchased_online(String email){
-        switch (state) {
-            case AVAILABLE:
-                state = BikeState.PICKUP;
-                this.email = email;
-                break;
-            case SERVICE:
-                throw new IllegalStateException("Bike is in service");
-            case PICKUP:
-                throw new IllegalStateException("Bike is being picked up");
-        }
+    public Bike(BikeState bikeState){
+        this.bikeState = bikeState;
     }
 
-    public void purchased_in_store(){
-        switch (state) {
-            case AVAILABLE:
-                state = BikeState.PICKUP;
-                break;
-            case SERVICE:
-                throw new IllegalStateException("Bike is in service");
-            case PICKUP:
-                throw new IllegalStateException("Bike is being picked up");
-        }
+    public void setState(BikeState bikeState)
+    {
+        this.bikeState = bikeState;
     }
 
-    public void drop_off(){
-        switch (state) {
-            case AVAILABLE:
-                state = BikeState.SERVICE;
-            case SERVICE:
-                break;
-            case PICKUP:
-                throw new IllegalStateException("Bike is being picked up");
-        }
+    public void setEmail(String email)
+    {
+        this.email = email;
     }
 
+    public String getEmail() { return email;}
+    
+
+
+    // State-dependent methods
+    // =======================
+    
+    public void purchased_online(String email)
+    {
+        bikeState.purchased_online(this, email);
+    }
+
+    public void purchased_in_store()
+    {
+        bikeState.purchased_in_store(this);
+    }
+
+    public void drop_off(String email)
+    {
+        bikeState.drop_off(this, email);
+    }
+
+    public void pick_up(String email)
+    {
+ 
+    }
 }

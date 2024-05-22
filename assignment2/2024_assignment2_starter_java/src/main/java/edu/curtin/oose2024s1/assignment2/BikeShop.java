@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 public class BikeShop {
     List<NewMessage> observers = new ArrayList<NewMessage>();
+    
     public BikeShop(){
         
         // BikeShopInput inp = new BikeShopInput(123);  // Seed for the random number generator

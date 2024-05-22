@@ -1,27 +1,50 @@
 package edu.curtin.oose2024s1.assignment2.states;
 
+import java.util.logging.Logger;
+
+import edu.curtin.oose2024s1.assignment2.Bike;
+import edu.curtin.oose2024s1.assignment2.observer.Delivery;
+
 public class ServiceState implements BikeState{
-    @Override
-    public void purchased_online(String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'purchased_online'");
+    private int days;
+    private static final Logger logger = Logger.getLogger(Delivery.class.getName());
+    public ServiceState() {
+        this.days = 0;
+    }
+
+    public int getDays() {
+        return days;
+    }
+
+    public void setDays(int days) {
+        this.days = days;
     }
 
     @Override
-    public void purchased_in_store() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'purchased_in_store'");
+    public void purchased_online(Bike bike, String email) {}
+
+    @Override
+    public void purchased_in_store(Bike bike) {}
+
+    @Override
+    public void drop_off(Bike bike, String email) {}
+
+    @Override
+    public void run(Bike bike) {
+        days++;
+        if(days == 2)
+        {
+            bike.setState(new PickUpState());
+
+        }
     }
 
     @Override
-    public void drop_off(String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'drop_off'");
-    }
+    public void pick_up(Bike bike, String email) {}
+
 
     @Override
-    public void run() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'run'");
-    }    
+    public void delivery(Bike bike) {}
+
+
 }
