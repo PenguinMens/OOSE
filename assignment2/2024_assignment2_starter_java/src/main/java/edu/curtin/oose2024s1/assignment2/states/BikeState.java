@@ -1,6 +1,7 @@
 package edu.curtin.oose2024s1.assignment2.states;
 import edu.curtin.oose2024s1.assignment2.Bike;
-import edu.curtin.oose2024s1.assignment2.StateObserver.StateTransitionCallback;
+import edu.curtin.oose2024s1.assignment2.StateObserver.StateTransistionCallback;
+
 
 public interface BikeState {
     public void purchased_online(Bike bike, String email);
@@ -9,5 +10,5 @@ public interface BikeState {
     public void delivery(Bike bike);
     public void pick_up(Bike bike, String email);
     public void run(Bike bike);
-    void setStateTransitionCallback(StateTransitionCallback callback);
+    void setStateTransitionCallback(StateTransistionCallback callback);
 }
