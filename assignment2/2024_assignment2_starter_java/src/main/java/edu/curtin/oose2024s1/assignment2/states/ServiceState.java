@@ -56,9 +56,9 @@ public class ServiceState implements BikeState{
         throw new UnsupportedOperationException("Unimplemented method 'setStateTransitionCallback'");
     }
     private void notifyStateTransition(Bike bike, BikeState oldState, BikeState newState) {
-        if (stateTransitionCallback != null) {
-            stateTransitionCallback.onStateTransition(bike, oldState, newState);
+            if (stateTransitionCallback != null) {
+                stateTransitionCallback.onStateTransition(bike, oldState, newState);
+            }
         }
-    }
 
 }

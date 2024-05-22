@@ -36,5 +36,11 @@ public class CanBeSoldState implements BikeState{
     @Override
     public void delivery(Bike bike) {}
 
+    @Override
+    public void setStateTransitionCallback(StateTransistionCallback callback) {
+        // TODO Auto-generated method stub
+        
+    }
+
 
 }
