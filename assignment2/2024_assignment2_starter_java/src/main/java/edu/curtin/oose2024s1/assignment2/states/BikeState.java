@@ -5,6 +5,6 @@ public interface BikeState {
     public void purchased_in_store(Bike bike);
     public void drop_off(Bike bike,String email);
     public void delivery(Bike bike);
-    public void pick_up(Bike bike);
+    public void pick_up(Bike bike, String email);
     public void run(Bike bike);
 }
