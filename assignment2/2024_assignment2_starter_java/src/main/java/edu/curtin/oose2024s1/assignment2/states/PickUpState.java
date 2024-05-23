@@ -1,7 +1,7 @@
 package edu.curtin.oose2024s1.assignment2.states;
 
 import edu.curtin.oose2024s1.assignment2.Bike;
-import edu.curtin.oose2024s1.assignment2.StateObserver.StateTransistionCallback;
+
 
 public class PickUpState implements BikeState {
 
@@ -29,11 +29,6 @@ public class PickUpState implements BikeState {
     @Override
     public void delivery(Bike bike) {}
 
-    @Override
-    public void setStateTransitionCallback(StateTransistionCallback callback) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setStateTransitionCallback'");
-    }
 
     
 }

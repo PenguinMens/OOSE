@@ -1,0 +1,68 @@
+@startuml
+!define RECTANGLE class
+!define INTERFACE interface
+!define ABSTRACT abstract class
+
+INTERFACE Observer {
+  +update(bike: Bike, state: String): void
+}
+
+INTERFACE TransitionObserver {
+  +onTransition(bike: Bike, fromState: String, toState: String): void
+}
+
+RECTANGLE Bike {
+  -BikeState state
+  -boolean transitionedFromInServiceToReady
+  -List<Observer> stateObservers
+  -List<TransitionObserver> transitionObservers
+  +Bike()
+  +addObserver(observer: Observer): void
+  +addTransitionObserver(observer: TransitionObserver): void
+  +setState(newState: BikeState): void
+  +notifyStateObservers(): void
+  +notifyTransitionObservers(fromState: String, toState: String): void
+  +hasTransitionedFromInServiceToReady(): boolean
+  +resetTransitionFlag(): void
+}
+
+RECTANGLE EmptyState {
+  +handle(bike: Bike): void
+}
+
+RECTANGLE InServiceState {
+  +handle(bike: Bike): void
+}
+
+RECTANGLE ReadyState {
+  +handle(bike: Bike): void
+}
+
+RECTANGLE PickUpState {
+  +handle(bike: Bike): void
+}
+
+RECTANGLE BikeObserver {
+  +update(bike: Bike, state: String): void
+  -handleEmpty(bike: Bike): void
+  -handleAvailable(bike: Bike): void
+  -handleInService(bike: Bike): void
+  -handleReady(bike: Bike): void
+}
+
+RECTANGLE InServiceToReadyObserver {
+  +onTransition(bike: Bike, fromState: String, toState: String): void
+  -handleInServiceToReady(bike: Bike): void
+}
+
+Bike -> Observer : observers *
+Bike -> TransitionObserver : transitionObservers *
+Bike -> BikeState : state
+BikeState <|-- EmptyState
+BikeState <|-- InServiceState
+BikeState <|-- ReadyState
+BikeState <|-- PickUpState
+Observer <|-- BikeObserver
+TransitionObserver <|-- InServiceToReadyObserver
+
+@enduml

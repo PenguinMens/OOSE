@@ -2,7 +2,7 @@ package edu.curtin.oose2024s1.assignment2.observer;
 
 import java.util.logging.Logger;
 
-import edu.curtin.oose2024s1.assignment2.BikeInventory;
+import edu.curtin.oose2024s1.assignment2.StateObserver.BikeInventory;
 
 public class DropOff implements NewMessage{
     private String message;
@@ -12,6 +12,7 @@ public class DropOff implements NewMessage{
         if(message.contains("DROP-OFF"))
         {
             logger.info("DropOff: " + message);
+            System.out.println("DropOff: " + message);
             bikeInventory.dropOffBike(message.split(" ")[1]);
         }
             

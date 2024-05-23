@@ -1,5 +1,6 @@
 package edu.curtin.oose2024s1.assignment2;
 import edu.curtin.oose2024s1.assignment2.observer.Delivery;
+import edu.curtin.oose2024s1.assignment2.StateObserver.BikeInventory;
 import edu.curtin.oose2024s1.assignment2.observer.*;
 
 

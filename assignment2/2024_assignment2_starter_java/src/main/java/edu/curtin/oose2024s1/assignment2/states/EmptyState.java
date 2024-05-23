@@ -3,7 +3,7 @@ package edu.curtin.oose2024s1.assignment2.states;
 import java.util.logging.Logger;
 
 import edu.curtin.oose2024s1.assignment2.Bike;
-import edu.curtin.oose2024s1.assignment2.StateObserver.StateTransistionCallback;
+
 import edu.curtin.oose2024s1.assignment2.observer.Delivery;
 
 public class EmptyState implements BikeState{
@@ -36,13 +36,8 @@ public class EmptyState implements BikeState{
         // TODO Auto-generated method stub
         logger.info("A bike has been delivered");
         bike.setState(new CanBeSoldState());
+        
     }
 
-    @Override
-    public void setStateTransitionCallback(StateTransistionCallback callback) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setStateTransitionCallback'");
-    }
 
-    
 }
