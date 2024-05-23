@@ -15,13 +15,9 @@ public class Delivery implements NewMessage {
    
         if(message.contains("DELIVERY"))
         {
-            if(bikeInventory.getMaximumBikes() - bikeInventory.getCurrentBikes() >= 10)
-            {
-                for (int i = 0; i < 10; i++)
-                { 
-                    bikeInventory.newBike();
-                }
-            } 
+
+            bikeInventory.newBike();
+
         }
             
         this.message = message;

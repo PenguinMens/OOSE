@@ -11,12 +11,15 @@ import edu.curtin.oose2024s1.assignment2.StateObserver.BikeInventory;
  */
 public class App
 {
+    
     public static void main(String[] args)
     {
         BikeShopInput inp = new BikeShopInput();
         StateManager stateManager = new StateManager();
-        BikeInventory bikeInventory = new BikeInventory(stateManager);
-
+        FinanceManager financeManager = new FinanceManager();
+        ErrorManager errorManager = new ErrorManager();
+        BikeInventory bikeInventory = new BikeInventory(stateManager,financeManager, errorManager);
+        
         BikeShop shop = new BikeShop(bikeInventory);
         
         try
@@ -39,9 +42,14 @@ public class App
                     msg = inp.nextMessage();
                     
                 }
-                
+                if(days % 7 == 0)
+                {
+                    financeManager.payWorker();
+                }
                 System.out.println("END OF DAY: " + days);
                 bikeInventory.printStats();
+                financeManager.printStats();
+                errorManager.printErrorLog();
                 // Wait 1 second
                 try
                 {

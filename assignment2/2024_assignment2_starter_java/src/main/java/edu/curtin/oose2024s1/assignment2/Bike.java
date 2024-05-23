@@ -10,6 +10,7 @@ public class Bike {
 
     private BikeState bikeState;
     private String email;
+    private float cost;
     private List<TransitionObserver> transitionObservers = new ArrayList<>();
 
     public Bike(BikeState bikeState){
@@ -81,6 +82,30 @@ public class Bike {
     public void delivery()
     {
         bikeState.delivery(this);
+    }
+
+    public BikeState getBikeState() {
+        return bikeState;
+    }
+
+    public void setBikeState(BikeState bikeState) {
+        this.bikeState = bikeState;
+    }
+
+    public float getCost() {
+        return cost;
+    }
+
+    public void setCost(float cost) {
+        this.cost = cost;
+    }
+
+    public List<TransitionObserver> getTransitionObservers() {
+        return transitionObservers;
+    }
+
+    public void setTransitionObservers(List<TransitionObserver> transitionObservers) {
+        this.transitionObservers = transitionObservers;
     }
 
 
