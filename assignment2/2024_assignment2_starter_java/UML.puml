@@ -1,80 +1,137 @@
 @startuml
-skinparam classAttributeIconSize 0
+!define RECTANGLE class
+!define INTERFACE interface
+!define ABSTRACT abstract class
 
-interface BikeState {
-    +purchased_online(Bike, String)
-    +purchased_in_store(Bike)
-    +drop_off(Bike, String)
-    +run(Bike)
-    +pick_up(Bike, String)
-    +delivery(Bike)
-    +setStateTransitionCallback(StateTransitionCallback)
+INTERFACE Observer {
+  +update(bike: Bike, state: String): void
 }
 
-interface StateTransitionCallback {
-    +onStateTransition(Bike, BikeState, BikeState)
+INTERFACE TransitionObserver {
+  +onTransition(bike: Bike, fromState: String, toState: String): void
 }
 
-class Bike {
-    -bikeState: BikeState
-    -email: String
-    -stateTransitionCallback: StateTransitionCallback
-    +setState(BikeState)
-    +setEmail(String)
-    +getEmail(): String
-    +setStateTransitionCallback(StateTransitionCallback)
-    +purchased_online(String)
-    +purchased_in_store()
-    +drop_off(String)
-    +pick_up(String)
-    +run()
-    +delivery()
+RECTANGLE Bike {
+  -BikeState state
+  -boolean transitionedFromInServiceToReady
+  -List<Observer> stateObservers
+  -List<TransitionObserver> transitionObservers
+  +Bike()
+  +addObserver(observer: Observer): void
+  +addTransitionObserver(observer: TransitionObserver): void
+  +setState(newState: BikeState): void
+  +notifyStateObservers(): void
+  +notifyTransitionObservers(fromState: String, toState: String): void
+  +hasTransitionedFromInServiceToReady(): boolean
+  +resetTransitionFlag(): void
 }
 
-class BikeInventory {
-    -MAX_BIKES: int
-    -currentBikes: int
-    -bikes: List<Bike>
-    +BikeInventory()
-    +onStateTransition(Bike, BikeState, BikeState)
-    +newBike()
-    +sellBike()
-    +dropOffBike(String)
-    +iterateService(String)
-    +print_stats()
+RECTANGLE EmptyState {
+  +handle(bike: Bike): void
 }
 
-Bike *-- BikeState
-Bike o-- StateTransitionCallback
-BikeInventory ..> StateTransitionCallback
-
-class ServiceState {
-    -days: int
-    -stateTransitionCallback: StateTransitionCallback
-    +run(Bike)
-    +setStateTransitionCallback(StateTransitionCallback)
+RECTANGLE InServiceState {
+  +handle(bike: Bike): void
 }
 
-class CanBeSoldState {
-    -stateTransitionCallback: StateTransitionCallback
-    +purchased_online(Bike, String)
-    +purchased_in_store(Bike)
-    +setStateTransitionCallback(StateTransitionCallback)
+RECTANGLE ReadyState {
+  +handle(bike: Bike): void
 }
 
-class PickUpState {
-    -stateTransitionCallback: StateTransitionCallback
-    +setStateTransitionCallback(StateTransitionCallback)
+RECTANGLE PickUpState {
+  +handle(bike: Bike): void
 }
 
-class EmptyState {
-    -stateTransitionCallback: StateTransitionCallback
-    +setStateTransitionCallback(StateTransitionCallback)
+RECTANGLE BikeObserver {
+  +update(bike: Bike, state: String): void
+  -handleEmpty(bike: Bike): void
+  -handleAvailable(bike: Bike): void
+  -handleInService(bike: Bike): void
+  -handleReady(bike: Bike): void
 }
 
-BikeState <|.. ServiceState
-BikeState <|.. CanBeSoldState
-BikeState <|.. PickUpState
-BikeState <|.. EmptyState
+RECTANGLE InServiceToReadyObserver {
+  +onTransition(bike: Bike, fromState: String, toState: String): void
+  -handleInServiceToReady(bike: Bike): void
+}
+
+RECTANGLE App {
+  +main(String[] args): void
+}
+
+RECTANGLE BikeController {
+  +BikeShop bikeShop
+  +void addBike(Bike bike)
+  +void removeBike(Bike bike)
+}
+
+RECTANGLE BikeShop {
+  +List<Bike> bikes
+  +void notifyObservers()
+}
+
+RECTANGLE BikeShopInput {
+  +BikeShop bikeShop
+  +void processInput(String input)
+}
+
+RECTANGLE FinanceManager {
+  +BikeShop bikeShop
+  +void updateFinance(Bike bike)
+}
+
+RECTANGLE StateManager {
+  +Bike bike
+  +void updateState(String newState)
+}
+
+RECTANGLE StatisticManager {
+  +BikeShop bikeShop
+  +void generateStatistics()
+}
+
+RECTANGLE StatisticTypes {
+  +void calculateStatistics()
+}
+
+RECTANGLE FullInventoryError {
+  +String message
+}
+
+RECTANGLE KeyWordObserver {
+  +void notify(String message)
+}
+
+RECTANGLE NewMessage {
+  +String message
+}
+
+RECTANGLE BikeInventory {
+  +List<Bike> bikes
+  +void updateInventory(Bike bike)
+}
+
+Bike -> Observer : observers *
+Bike -> TransitionObserver : transitionObservers *
+Bike -> BikeState : state
+BikeState <|-- EmptyState
+BikeState <|-- InServiceState
+BikeState <|-- ReadyState
+BikeState <|-- PickUpState
+Observer <|-- BikeObserver
+TransitionObserver <|-- InServiceToReadyObserver
+
+App --> BikeShop
+BikeShop --> Bike
+BikeShop --> BikeController
+BikeShop --> BikeShopInput
+BikeShop --> FinanceManager
+BikeShop --> StateManager
+BikeShop --> StatisticManager
+StatisticManager --> StatisticTypes
+BikeShop --> FullInventoryError
+BikeShop --> BikeInventory
+BikeShop --> TransitionObserver
+KeyWordObserver --> NewMessage
 
 @enduml

@@ -1,68 +1,179 @@
 @startuml
-!define RECTANGLE class
-!define INTERFACE interface
-!define ABSTRACT abstract class
-
-INTERFACE Observer {
-  +update(bike: Bike, state: String): void
+class App {
+    -logger : Logger
+    -writer : BufferedWriter
+    -checkValid(String message) : Boolean
+    +main(String[] args)
+    +writeToFile(String message)
 }
 
-INTERFACE TransitionObserver {
-  +onTransition(bike: Bike, fromState: String, toState: String): void
+class BikeShopInput {
+    +nextMessage() : String
 }
 
-RECTANGLE Bike {
-  -BikeState state
-  -boolean transitionedFromInServiceToReady
-  -List<Observer> stateObservers
-  -List<TransitionObserver> transitionObservers
-  +Bike()
-  +addObserver(observer: Observer): void
-  +addTransitionObserver(observer: TransitionObserver): void
-  +setState(newState: BikeState): void
-  +notifyStateObservers(): void
-  +notifyTransitionObservers(fromState: String, toState: String): void
-  +hasTransitionedFromInServiceToReady(): boolean
-  +resetTransitionFlag(): void
+class StateManager {
+    -bikeMap : Map<String, List<Bike>>
+    +StateManager()
+    +addBike(String state, Bike bike)
+    +removeBike(String state, Bike bike)
+    +getBikes(String state) : List<Bike>
+    +findBikeByEmail(String state, String email) : Bike
+    +moveBike(String fromState, String toState, Bike bike)
+    +getStateInstance(String state) : BikeState
 }
 
-RECTANGLE EmptyState {
-  +handle(bike: Bike): void
+class FinanceManager {
+    +payWorker()
+    +printStats() : String
+    +deductMoney(float amount)
+    +addMoney(float amount)
+    +getBalance() : float
 }
 
-RECTANGLE InServiceState {
-  +handle(bike: Bike): void
+class StatisticManager {
+    +incrementError(StatisticTypes)
+    +printErrorLog()
+    +printFinalStats() : String
 }
 
-RECTANGLE ReadyState {
-  +handle(bike: Bike): void
+class BikeInventory implements TransitionObserver {
+    -MAX_BIKES : int
+    -currentBikes : int
+    -stateManager : StateManager
+    -financeManager : FinanceManager
+    -errorManager : StatisticManager
+    -logger : Logger
+    -writer : BufferedWriter
+    +BikeInventory(StateManager stateManager, FinanceManager financeManager, StatisticManager errorManager, BufferedWriter writer)
+    +newBike()
+    +sellBike()
+    +dropOffBike(String message)
+    +bikeIterate()
+    +pickUpBike(String message)
+    +sellBikeOnline(String message)
+    +update(Bike bike, String fromState, String toState)
+    +printStats() : String
+    -initializeBikes()
+    -handleServiceToReadyTransition(Bike bike)
 }
 
-RECTANGLE PickUpState {
-  +handle(bike: Bike): void
+class BikeShop {
+    +BIKECOST : float
+    +BIKESELLVALUE : float
+    +BIKESERVICE : float
+    -observers : List<NewMessage>
+    -bikeInventory : BikeInventory
+    -logger : Logger
+    +BikeShop(BikeInventory bikeInventory)
+    +addNewMessageObserver(NewMessage observer)
+    +newMessage(String message)
 }
 
-RECTANGLE BikeObserver {
-  +update(bike: Bike, state: String): void
-  -handleEmpty(bike: Bike): void
-  -handleAvailable(bike: Bike): void
-  -handleInService(bike: Bike): void
-  -handleReady(bike: Bike): void
+
+interface NewMessage {
+    +update(String message, BikeInventory bikeInventory)
 }
 
-RECTANGLE InServiceToReadyObserver {
-  +onTransition(bike: Bike, fromState: String, toState: String): void
-  -handleInServiceToReady(bike: Bike): void
+class KeyWordObserver implements NewMessage {
+    -keyWord : String
+    -action : Function<String, String>
+    +KeyWordObserver(String keyWord, Function<String, String> action)
+    +update(String message, BikeInventory bikeInventory)
 }
 
-Bike -> Observer : observers *
-Bike -> TransitionObserver : transitionObservers *
-Bike -> BikeState : state
-BikeState <|-- EmptyState
-BikeState <|-- InServiceState
-BikeState <|-- ReadyState
-BikeState <|-- PickUpState
-Observer <|-- BikeObserver
-TransitionObserver <|-- InServiceToReadyObserver
+interface TransitionObserver {
+    +update(Bike bike, String fromState, String toState)
+}
 
+class Bike {
+    -bikeState : BikeState
+    -email : String
+    -cost : float
+    -transitionObservers : List<TransitionObserver>
+    +setState(BikeState bikeState)
+    +setEmail(String email)
+    +getEmail() : String
+    +addTransitionObserver(TransitionObserver observer)
+    +removeTransitionObserver(TransitionObserver observer)
+    +purchased_online(String email)
+    +purchased_in_store()
+    +drop_off(String email)
+    +pick_up(String email)
+    +run()
+    +delivery()
+    +getBikeState() : BikeState
+    +setBikeState(BikeState bikeState)
+    +getCost() : float
+    +setCost(float cost)
+    +getTransitionObservers() : List<TransitionObserver>
+    +setTransitionObservers(List<TransitionObserver> transitionObservers)
+}
+
+interface BikeState {
+    +purchased_online(Bike bike, String email)
+    +purchased_in_store(Bike bike)
+    +drop_off(Bike bike, String email)
+    +pick_up(Bike bike, String email)
+    +run(Bike bike)
+    +delivery(Bike bike)
+}
+
+class CanBeSoldState implements BikeState {
+    +purchased_online(Bike bike, String email)
+    +purchased_in_store(Bike bike)
+    +drop_off(Bike bike, String email)
+    +pick_up(Bike bike, String email)
+    +run(Bike bike)
+    +delivery(Bike bike)
+}
+
+class EmptyState implements BikeState {
+    +purchased_online(Bike bike, String email)
+    +purchased_in_store(Bike bike)
+    +drop_off(Bike bike, String email)
+    +pick_up(Bike bike, String email)
+    +run(Bike bike)
+    +delivery(Bike bike)
+}
+
+class PickUpState implements BikeState {
+    +purchased_online(Bike bike, String email)
+    +purchased_in_store(Bike bike)
+    +drop_off(Bike bike, String email)
+    +pick_up(Bike bike, String email)
+    +run(Bike bike)
+    +delivery(Bike bike)
+}
+
+class ServiceState implements BikeState {
+    +purchased_online(Bike bike, String email)
+    +purchased_in_store(Bike bike)
+    +drop_off(Bike bike, String email)
+    +pick_up(Bike bike, String email)
+    +run(Bike bike)
+    +delivery(Bike bike)
+}
+
+enum StatisticTypes {
+    NOT_ENOUGH_SPACE,
+    NOT_ENOUGH_CASH,
+    NO_BIKES_LEFT,
+    NO_BIKE_MATCHING,
+    BIKE_NOT_READY,
+    INVALID_MESSAGE_PARSING_ERROR,
+    TOTAL_MESSAGES
+}
+
+
+
+StateManager o-> BikeState
+Bike -> TransitionObserver
+BikeShop -> NewMessage
+App -> StateManager
+App -> FinanceManager
+App -> BikeInventory
+BikeShop -> BikeInventory
+StateManager "1" -right- "*" Bike
+App -> StatisticManager
+App -> BikeShopInput
 @enduml

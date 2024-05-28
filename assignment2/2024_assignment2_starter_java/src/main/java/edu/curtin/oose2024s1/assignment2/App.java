@@ -58,7 +58,8 @@ public class App
         BikeInventory bikeInventory = new BikeInventory(stateManager,financeManager, errorManager, writer);
         
         BikeShop shop = new BikeShop(bikeInventory);
-               // pick up  
+               // pick up  // NOTE THIS IS AN ATTEMPT AT GENERICS
+               // I DONT THINK ITS RIGHT THO
        NewMessage pickUp = new KeyWordObserver("PICK-UP", (String message) -> {
 
             bikeInventory.pickUpBike(message);
