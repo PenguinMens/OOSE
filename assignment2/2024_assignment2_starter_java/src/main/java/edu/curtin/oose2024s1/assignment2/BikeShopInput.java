@@ -18,7 +18,7 @@ public class BikeShopInput
     private static final double DROP_OFF_P = 0.25;
     private static final double PURCHASE_ONLINE_P = 0.4;
     private static final double PURCHASE_IN_STORE_P = 0.4;
-    private static final double PICK_UP_P = 0.25;
+    private static final double PICK_UP_P = 0.65;
     private static final double SCREW_UP_P = 0.05;
 
     private long lastTime = System.currentTimeMillis();

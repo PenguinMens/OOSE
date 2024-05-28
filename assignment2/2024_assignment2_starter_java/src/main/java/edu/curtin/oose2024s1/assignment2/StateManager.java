@@ -17,6 +17,7 @@ public class StateManager {
 
     public StateManager() {
         bikeMap = new HashMap<>();
+        // make space for 4 different states of bikes
         bikeMap.put("Available", new ArrayList<>());
         bikeMap.put("Ready", new ArrayList<>());
         bikeMap.put("Service", new ArrayList<>());
@@ -37,7 +38,7 @@ public class StateManager {
 
     public Bike findBikeByEmail(String state, String email) {
         for (Bike bike : bikeMap.get(state)) {
-            System.out.printf("trying to find bike %s, %s\n", bike.getEmail(), email);
+   
             if (bike.getEmail().equals(email)) {
                 return bike;
             }

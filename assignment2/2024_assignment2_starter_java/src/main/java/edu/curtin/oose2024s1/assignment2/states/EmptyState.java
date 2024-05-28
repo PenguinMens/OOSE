@@ -4,11 +4,11 @@ import java.util.logging.Logger;
 
 import edu.curtin.oose2024s1.assignment2.Bike;
 
-import edu.curtin.oose2024s1.assignment2.observer.Delivery;
+
 
 public class EmptyState implements BikeState{
 
-    private static final Logger logger = Logger.getLogger(Delivery.class.getName());
+    private static final Logger logger = Logger.getLogger(EmptyState.class.getName());
 
     @Override
     public void purchased_online(Bike bike, String email) {  }

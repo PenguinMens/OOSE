@@ -6,7 +6,7 @@ public class FinanceManager {
     private int workers;
     public FinanceManager()
     {
-        this.balance = 0.0f;
+        this.balance = 15000.0f;// default balance
         workers = 1;
     }
 
@@ -35,10 +35,11 @@ public class FinanceManager {
         return totalRevenue;
     }
 
-    public void printStats()
+    public String printStats()
     {
-        System.out.println("Total Revenue: " + totalRevenue);
-        System.out.println("Balance: " + balance);
+        return "Total Revenue: " + totalRevenue + "\nBalance: " + balance;
+        // System.out.println("Total Revenue: " + totalRevenue);
+        // System.out.println("Balance: " + balance);
    
     }
 }

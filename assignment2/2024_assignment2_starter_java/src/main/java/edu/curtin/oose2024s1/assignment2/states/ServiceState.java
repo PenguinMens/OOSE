@@ -3,12 +3,12 @@ package edu.curtin.oose2024s1.assignment2.states;
 import java.util.logging.Logger;
 
 import edu.curtin.oose2024s1.assignment2.Bike;
-import edu.curtin.oose2024s1.assignment2.observer.Delivery;
+
 
 public class ServiceState implements BikeState{
     private int days;
 
-    private static final Logger logger = Logger.getLogger(Delivery.class.getName());
+    private static final Logger logger = Logger.getLogger(ServiceState.class.getName());
     public ServiceState() {
         this.days = 0;
     }
@@ -32,7 +32,7 @@ public class ServiceState implements BikeState{
 
     @Override
     public void run(Bike bike) {
-        System.out.println("does this shit run?");
+
         days++;
         if(days == 2) // since we do ++ first
         {
